@@ -4,7 +4,7 @@ int pin2 = 35;
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 const char* ssid = "Neurolabs";
-const char* password = "neuroTechlab@iith";
+const char* password = "*****";
 
 //Your Domain name with URL path or IP address with path
 const char* serverName = "http://192.168.0.237:5000/fsr_sensor";
