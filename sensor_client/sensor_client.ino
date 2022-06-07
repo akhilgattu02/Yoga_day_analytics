@@ -2,17 +2,29 @@
 #include <WiFi.h>
 #include <WebSocketsClient.h>
 #include <ArduinoJson.h>
-#include "DHT.h"
-#define DHTPIN 2
-#define DHTTYPE DHT11
 WebSocketsClient webSocket;
- 
-const char *ssid     = "Neurolabs";
-const char *password = "neuroTechlab@iith";
+int rows = 5;
+int columns = 5;
+
+int i,j, sensor;
+int f = 0;
+int Sin[4] = {19, 18, 4, 2};
+int Sout[4] = {27,14,12,13};
+int MUXtable[16][4] =
+{
+  {0,0,0,0},{0,0,0,1},{0,0,1,0},{0,0,1,1},
+  {0,1,0,0},{0,1,0,1},{0,1,1,0},{0,1,1,1},
+  {1,0,0,0},{1,0,0,1},{1,0,1,0},{1,0,1,1},
+  {1,1,0,0},{1,1,0,1},{1,1,1,0},{1,1,1,1},
+};
+int sig_input = 26;
+int sig_output = 34;
+
+const char *ssid     = "TP-Link_B268";
+const char *password = "14804120";
  
 unsigned long messageInterval = 1;
 bool connected = false;
-DHT dht(DHTPIN, DHTTYPE);
 #define DEBUG_SERIAL Serial
  
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
@@ -76,16 +88,15 @@ void setup() {
     DEBUG_SERIAL.println();
     DEBUG_SERIAL.println();
     DEBUG_SERIAL.println();
-    pinMode(34, INPUT);
-    pinMode(35, INPUT);
-    pinMode(36, INPUT);
-    pinMode(39, INPUT);
+    pinMode(sig_input, OUTPUT); //giving output to multiplexer
+    pinMode(sig_output, INPUT); //taking input from the multiplexer
+    for(i = 0; i<4; i++) pinMode(Sin[i], OUTPUT);
+    for(i = 0; i<4; i++) pinMode(Sout [i], OUTPUT);
     for(uint8_t t = 4; t > 0; t--) {
         DEBUG_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
         DEBUG_SERIAL.flush();
         delay(1000);
     }
-    dht.begin();
     WiFi.begin(ssid, password);
  
     while ( WiFi.status() != WL_CONNECTED ) {
@@ -94,7 +105,7 @@ void setup() {
     }
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
-    webSocket.begin("192.168.0.237", 7891, "/");
+    webSocket.begin("192.168.0.100", 7891, "/yoga_mat");
  
     // event handler
     webSocket.onEvent(webSocketEvent);
@@ -106,22 +117,28 @@ unsigned long lastUpdate = millis();
 void loop() {
     webSocket.loop();
     if (connected && lastUpdate+messageInterval<millis()){
-        
-        float temp = dht.readTemperature();
-        float pin1 = analogRead(34);
-        float pin2 = analogRead(35);
-        float pin3 = analogRead(36);
-        float pin4 = analogRead(39);
+        int k=0;
         DynamicJsonDocument doc(2048);
-        doc["temp"] = temp;
-        doc["pin1"] = pin1;
-        doc["pin2"] = pin2;
-        doc["pin3"] = pin3;
-        doc["pin4"] = pin4;
+        for(j = 0; j<columns ; j++){
+        digitalWrite(Sin[0], MUXtable[j][0]);
+        digitalWrite(Sin[1], MUXtable[j][1]);
+        digitalWrite(Sin[2], MUXtable[j][2]);
+        digitalWrite(Sin[3], MUXtable[j][3]);
+        for(int i =0; i<rows ; i++){
+          digitalWrite(Sout[0], MUXtable[j][0]);
+          digitalWrite(Sout[1], MUXtable[j][1]);
+          digitalWrite(Sout[2], MUXtable[j][2]);
+          digitalWrite(Sout[3], MUXtable[j][3]);
+          sensor = analogRead(sig_output);
+          doc["Data"][k++] = sensor;
+        }
+       }  
+     
         String json;
+        DEBUG_SERIAL.println(doc.memoryUsage());
         serializeJson(doc, json);
-        Serial.println(temp);
         DEBUG_SERIAL.println("[WSc] SENT: Simple js client message!!");
+        
         webSocket.sendTXT(json);
         lastUpdate = millis();
     }

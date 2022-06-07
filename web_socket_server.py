@@ -1,13 +1,14 @@
 import asyncio
 import websockets
 import json
-HOST = "192.168.0.237"  # Empty denotes a localhost.
+HOST = "192.168.0.100"  # Empty denotes a localhost.
 PORT = 7891
 CONNECTIONS = set()
 
 
 async def handler(websocket):
     CONNECTIONS.add(websocket)
+
     count = 0
     while True:
         try:
@@ -30,4 +31,7 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+   asyncio.run(main())
+
+
+
