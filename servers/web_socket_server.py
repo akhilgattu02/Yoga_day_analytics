@@ -1,7 +1,8 @@
 import asyncio
 import websockets
 import json
-HOST = "192.168.0.100"  # Empty denotes a localhost.
+import time
+HOST = ""  # Empty denotes a localhost.
 PORT = 7891
 CONNECTIONS = set()
 
@@ -24,9 +25,8 @@ async def handler(websocket):
             print(f'Server Error: {error1}')
             CONNECTIONS.remove(websocket)
 
-
 async def main():
-    async with websockets.serve(handler, HOST, PORT):
+    async with websockets.serve(handler, HOST, PORT, ping_interval=None, ping_timeout=None):
         await asyncio.Future()  # run forever
 
 

@@ -3,13 +3,13 @@
 #include <WebSocketsClient.h>
 #include <ArduinoJson.h>
 WebSocketsClient webSocket;
-int rows = 5;
-int columns = 5;
 
-int i,j, sensor;
-int f = 0;
-int Sin[4] = {19, 18, 4, 2};
-int Sout[4] = {27,14,12,13};
+int i,j;
+int sensor;
+int rows = 16;
+int columns = 16;
+int Sin[4] = {15,2,4,16};
+int Sout[4] = {5,18,19,21};
 int MUXtable[16][4] =
 {
   {0,0,0,0},{0,0,0,1},{0,0,1,0},{0,0,1,1},
@@ -17,14 +17,15 @@ int MUXtable[16][4] =
   {1,0,0,0},{1,0,0,1},{1,0,1,0},{1,0,1,1},
   {1,1,0,0},{1,1,0,1},{1,1,1,0},{1,1,1,1},
 };
-int sig_input = 26;
+int sig_input = 17;
 int sig_output = 34;
 
-const char *ssid     = "TP-Link_B268";
-const char *password = "14804120";
+const char *ssid     = "Neurolabs";
+const char *password = "neuroTechlab@iith";
  
-unsigned long messageInterval = 1;
+
 bool connected = false;
+unsigned long lastUpdate = millis();
 #define DEBUG_SERIAL Serial
  
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
@@ -48,20 +49,18 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
             connected = false;
             break;
         case WStype_CONNECTED: {
-            DEBUG_SERIAL.printf("[WSc] Connected to url: %s\n", payload);
             connected = true;
  
             // send message to server when Connected
             DEBUG_SERIAL.println("[WSc] SENT: Connected");
-            webSocket.sendTXT("Connected");
+            
         }
             break;
         case WStype_TEXT:
-            DEBUG_SERIAL.printf("[WSc] RESPONSE: %s\n", payload);
+            
             break;
         case WStype_BIN:
-            DEBUG_SERIAL.printf("[WSc] get binary length: %u\n", length);
-            hexdump(payload, length);
+      
             break;
         case WStype_PING:
             // pong will be send automatically
@@ -79,20 +78,21 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
         break;
     }
 }
- 
+
 void setup() {
-    DEBUG_SERIAL.begin(115200);
+  DEBUG_SERIAL.begin(115200);
  
 //  DEBUG_SERIAL.setDebugOutput(true);
  
     DEBUG_SERIAL.println();
     DEBUG_SERIAL.println();
     DEBUG_SERIAL.println();
-    pinMode(sig_input, OUTPUT); //giving output to multiplexer
-    pinMode(sig_output, INPUT); //taking input from the multiplexer
-    for(i = 0; i<4; i++) pinMode(Sin[i], OUTPUT);
-    for(i = 0; i<4; i++) pinMode(Sout [i], OUTPUT);
-    for(uint8_t t = 4; t > 0; t--) {
+    
+  pinMode(sig_input, OUTPUT); //giving output to multiplexer
+  pinMode(sig_output, INPUT); //taking input from the multiplexer
+  for(i = 0; i<4; i++) pinMode(Sin[i], OUTPUT);
+  for(i = 0; i<4; i++) pinMode(Sout [i], OUTPUT);
+  for(uint8_t t = 4; t > 0; t--) {
         DEBUG_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
         DEBUG_SERIAL.flush();
         delay(1000);
@@ -105,41 +105,43 @@ void setup() {
     }
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
-    webSocket.begin("192.168.0.100", 7891, "/yoga_mat");
+    webSocket.begin("192.168.0.237", 7891, "/");
  
     // event handler
     webSocket.onEvent(webSocketEvent);
 }
- 
-unsigned long lastUpdate = millis();
- 
- 
+
 void loop() {
-    webSocket.loop();
-    if (connected && lastUpdate+messageInterval<millis()){
+  // put your main code here, to run repeatedly:
+   webSocket.loop();
+    if (connected){
         int k=0;
-        DynamicJsonDocument doc(2048);
-        for(j = 0; j<columns ; j++){
-        digitalWrite(Sin[0], MUXtable[j][0]);
-        digitalWrite(Sin[1], MUXtable[j][1]);
-        digitalWrite(Sin[2], MUXtable[j][2]);
-        digitalWrite(Sin[3], MUXtable[j][3]);
-        for(int i =0; i<rows ; i++){
-          digitalWrite(Sout[0], MUXtable[j][0]);
-          digitalWrite(Sout[1], MUXtable[j][1]);
-          digitalWrite(Sout[2], MUXtable[j][2]);
-          digitalWrite(Sout[3], MUXtable[j][3]);
-          sensor = analogRead(sig_output);
-          doc["Data"][k++] = sensor;
-        }
-       }  
-     
+        DynamicJsonDocument doc(10000);
         String json;
-        DEBUG_SERIAL.println(doc.memoryUsage());
+        digitalWrite(sig_input, HIGH);
+        for(j = 0; j<columns ; j++){
+          digitalWrite(Sin[0], MUXtable[j][0]);
+          digitalWrite(Sin[1], MUXtable[j][1]);
+          digitalWrite(Sin[2], MUXtable[j][2]);
+          digitalWrite(Sin[3], MUXtable[j][3]);
+          for(int i =0; i<rows ; i++){
+            digitalWrite(Sout[0], MUXtable[i][0]);
+            digitalWrite(Sout[1], MUXtable[i][1]);
+            digitalWrite(Sout[2], MUXtable[i][2]);
+            digitalWrite(Sout[3], MUXtable[i][3]);
+            sensor = analogRead(sig_output);
+            //Serial.print(sensor);
+            doc["Data"][k++] = sensor;
+            //Serial.print(" ");
+           }  
+           //Serial.println(" ");
+        } 
+        //Serial.println(" ");
+        //Serial.println(" ");
+        
         serializeJson(doc, json);
-        DEBUG_SERIAL.println("[WSc] SENT: Simple js client message!!");
         
         webSocket.sendTXT(json);
-        lastUpdate = millis();
+        
     }
 }
