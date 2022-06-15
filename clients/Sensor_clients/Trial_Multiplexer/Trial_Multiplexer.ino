@@ -105,7 +105,7 @@ void setup() {
     }
     DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
-    webSocket.begin("192.168.0.237", 7891, "/");
+    webSocket.begin("192.168.0.92", 7891, "/");
  
     // event handler
     webSocket.onEvent(webSocketEvent);
@@ -131,7 +131,9 @@ void loop() {
             digitalWrite(Sout[3], MUXtable[i][3]);
             sensor = analogRead(sig_output);
             //Serial.print(sensor);
-            doc["Data"][k++] = sensor;
+            doc["sensor_type"] = 3;
+            doc["data"][j][i] = sensor;
+            doc["time"] = millis();
             //Serial.print(" ");
            }  
            //Serial.println(" ");
