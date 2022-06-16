@@ -13,7 +13,7 @@ closes = np.array([])
 def on_message(ws, message):
     global closes
     message = json.loads(message)
-    close = message["Data"]
+    close = message["data"]
     closes = np.array(close)
 
 #Initiate a websocket running forever
@@ -33,19 +33,19 @@ def animate(i):
     print(closes)
     data_arr = closes
 
-    rows = 16
-    columns = 16
+    rows = 65
+    columns = 21
     
-    Z = data_arr.reshape(columns,rows)
-
+    #Z = data_arr.reshape(columns,rows)
+    Z = data_arr
     ax = fig.add_subplot(1,1,1)
 
-    plt.imshow(Z,origin='lower', interpolation = "bilinear", cmap='gist_rainbow',extent = [0,3*rows,0,3*columns], vmin=0, vmax = 3500)
+    plt.imshow(Z,origin='lower', cmap='gist_rainbow',extent = [0,(2.84)*rows,0,(2.84)*columns], vmin=0, vmax = 3500)
     plt.colorbar()
     
 
 anim = FuncAnimation(
-    fig, animate, interval=10
+    fig, animate, interval=1
 )
 
 plt.show()
