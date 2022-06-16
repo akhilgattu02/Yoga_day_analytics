@@ -134,7 +134,7 @@ void setup()
   particleSensor.setPulseAmplitudeGreen(0); //Turn off Green LED 
   DEBUG_SERIAL.print("Local IP: "); DEBUG_SERIAL.println(WiFi.localIP());
     // server address, port and URL
-    webSocket.begin("192.168.0.92", 7891, "");
+    webSocket.begin("192.168.0.92", 7891);
  
     // event handler
     webSocket.onEvent(webSocketEvent);
