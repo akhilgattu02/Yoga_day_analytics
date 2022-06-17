@@ -8,10 +8,12 @@
 ### Pulse oximeter and GSR:
 #### Sensor data format
 #### Plots
+1. X-axis represents time for all the sensors and Y-axis represents pulse for pulse oximeter, sensor output voltage for GSR and FSR.  
 ![alt text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/Pulse_ox.png)
 ### Yoga mat heatmap:
 #### Sensor data format
 #### Plots
+1. The heatmap gives spatial representation of distribution of pressures across the yoga mat, the intensity of colours represents the output sensor voltage, output sensor voltage is directly proportionally to pressure applied on the mat.
 ![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/heatmap.png)
 ### FSR:
 #### Sensor data format
@@ -20,6 +22,7 @@
 ### EMG:
 #### Sensor data format
 #### Plots
+1. The X-axis represents time for all the subplots and the Y-axis represents the output voltages for all 16 channels.
 ![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/emg.png)
 ## Issues to fix:
 1. Database integration
