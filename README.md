@@ -6,14 +6,17 @@
 4. The flask server collects 8 samples of sensor data per second.
 ## Sensors:
 ### Pulse oximeter and GSR:
+![alt text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/Pulse_ox.png)
 #### Sensor data format
 #### Plots
 ### Yoga mat heatmap:
+
 #### Sensor data format
 #### Plots
 ### FSR:
 #### Sensor data format
 #### Plots
+![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/fsr_plot.png)
 ### EMG:
 #### Sensor data format
 #### Plots
