@@ -40,7 +40,7 @@ def animate(i):
     Z = data_arr
     ax = fig.add_subplot(1,1,1)
 
-    plt.imshow(Z,origin='lower', cmap='gist_rainbow',extent = [0,(2.84)*rows,0,(2.84)*columns], vmin=0, vmax = 3500)
+    plt.imshow(Z,origin='lower', cmap='gist_rainbow',extent = [0,(2.84)*rows,0,(2.84)*columns], vmin=0, vmax = 2900)
     plt.colorbar()
     
 

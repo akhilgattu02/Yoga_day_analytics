@@ -33,6 +33,7 @@ def on_message(ws, message):
 
     sensor_type = msg_json['sensor_type']
     if(sensor_type == 2):
+
         time_emg.append(msg_json["time"])
         channel_1.append(msg_json["emg"][0])
         channel_2.append(msg_json["emg"][1])
@@ -68,56 +69,79 @@ fig, axs = plt.subplots(8, 2)
 
 
 def animate(i):
+    n = 100
     # Render plots as a matplotlib animation
-
-    axs[0][0].plot(time_emg, channel_1)
+    axs[0][0].cla()
+    axs[0][0].plot(time_emg[-n:], channel_1[-n:])
     axs[0][0].set_title('Channel 1')
+    
     #axs[0][0].set_ylim([-4000, 4000])
-    axs[1][0].plot(time_emg, channel_2)
+    axs[1][0].cla()
+    axs[1][0].plot(time_emg[-n:], channel_2[-n:])
     axs[1][0].set_title('Channel 2')
     #axs[1][0].set_ylim([-4000, 4000])
-    axs[2][0].plot(time_emg, channel_3)
+    axs[2][0].cla()
+    axs[2][0].plot(time_emg[-n:], channel_3[-n:])
     axs[2][0].set_title('Channel 3')
+    
     #axs[2][0].set_ylim([-4000, 4000])
-    axs[3][0].plot(time_emg, channel_4)
+    axs[3][0].cla()
+    axs[3][0].plot(time_emg[-n:], channel_4[-n:])
     axs[3][0].set_title('Channel 4')
+    
     #axs[3][0].set_ylim([-4000, 4000])
-    axs[4][0].plot(time_emg, channel_5)
+    axs[4][0].cla()
+    axs[4][0].plot(time_emg[-n:], channel_5[-n:])
     axs[4][0].set_title('Channel 5')
+    
     #axs[4][0].set_ylim([-4000, 4000])
-    axs[5][0].plot(time_emg, channel_6)
+    axs[5][0].cla()
+    axs[5][0].plot(time_emg[-n:], channel_6[-n:])
     axs[5][0].set_title('Channel 6')
     #axs[5][0].set_ylim([-4000, 4000])
-    axs[6][0].plot(time_emg, channel_7)
+    axs[6][0].cla()
+    axs[6][0].plot(time_emg[-n:], channel_7[-n:])
     axs[6][0].set_title('Channel 7')
     #axs[6][0].set_ylim([-4000, 4000])
-    axs[7][0].plot(time_emg, channel_8)
+    axs[7][0].cla()
+    axs[7][0].plot(time_emg[-n:], channel_8[-n:])
     axs[7][0].set_title('Channel 8')
     #axs[7][0].set_ylim([-4000, 4000])
-    axs[0][1].plot(time_emg, channel_9)
+    axs[0][1].cla()
+    axs[0][1].plot(time_emg[-n:], channel_9[-n:])
     axs[0][1].set_title('Channel 9')
     #axs[0][1].set_ylim([-4000, 4000])
-    axs[1][1].plot(time_emg, channel_10)
+    axs[1][1].cla()
+    axs[1][1].plot(time_emg[-n:], channel_10[-n:])
     axs[1][1].set_title('Channel 10')
+    
     #axs[1][1].set_ylim([-4000, 4000])
-    axs[2][1].plot(time_emg, channel_11)
+    axs[2][1].cla()
+
+    axs[2][1].plot(time_emg[-n:], channel_11[-n:])
     axs[2][1].set_title('Channel 11')
     #axs[2][1].set_ylim([-4000, 4000])
-    axs[3][1].plot(time_emg, channel_12)
+    axs[3][1].cla()
+    axs[3][1].plot(time_emg[-n:], channel_12[-n:])
     axs[3][1].set_title('Channel 12')
     #axs[3][1].set_ylim([-4000, 4000])
-    axs[4][1].plot(time_emg, channel_13)
+    axs[4][1].cla()
+    axs[4][1].plot(time_emg[-n:], channel_13[-n:])
     axs[4][1].set_title('Channel 13')
     #axs[4][1].set_ylim([-4000, 4000])
-    axs[5][1].plot(time_emg, channel_14)
+    axs[5][1].cla()
+    axs[5][1].plot(time_emg[-n:], channel_14[-n:])
     axs[5][1].set_title('Channel 14')
     #axs[5][1].set_ylim([-4000, 4000])
-    axs[6][1].plot(time_emg, channel_15)
+    axs[6][1].cla()
+    axs[6][1].plot(time_emg[-n:], channel_15[-n:])
     axs[6][1].set_title('Channel 15')
     #axs[6][1].set_ylim([-4000, 4000])
-    axs[7][1].plot(time_emg, channel_16)
+    axs[7][1].cla()
+    axs[7][1].plot(time_emg[-n:], channel_16[-n:])
     axs[7][1].set_title('Channel 16')
     #axs[7][1].set_ylim([-4000, 4000])
+    
 
 anim = FuncAnimation(
     fig, animate, interval=1000

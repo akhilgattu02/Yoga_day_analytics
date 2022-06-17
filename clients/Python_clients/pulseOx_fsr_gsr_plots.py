@@ -49,9 +49,15 @@ fig, axs = plt.subplots(3)
 
 def animate(i):
     # Render plots as a matplotlib animation
+    axs[0].cla()
+    axs[0].set_title('Pulse Oximeter')
     axs[0].plot(time_pulse, pulse)
+    axs[1].cla()
     axs[1].plot(time_pulse, gsr)
+    axs[1].set_title('GSR')
+    axs[2].cla()
     axs[2].plot(time_fsr, fsr)
+    axs[2].set_title('FSR')
 
 
 anim = FuncAnimation(

@@ -3,7 +3,7 @@ import websockets
 import json
 import time
 HOST = "192.168.0.237"  # Empty denotes a localhost.
-PORT = 7892
+PORT = 7891 
 CONNECTIONS = set()
 
 
@@ -28,7 +28,7 @@ async def handler(websocket):
 
 async def main():
     server1 = await websockets.serve(handler, HOST, PORT, ping_interval=None, ping_timeout=None)
-    server2 = await websockets.serve(handler, HOST, 7891, ping_interval=None, ping_timeout=None)
+    server2 = await websockets.serve(handler, HOST, 7892, ping_interval=None, ping_timeout=None)
     await asyncio.gather(server1.wait_closed(), server2.wait_closed())
       # run forever
 
