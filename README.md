@@ -18,7 +18,14 @@ In today's times, there is growing consciousness with respect to monitoring heal
 ![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/architecture.png)
 
 ## Technology stack
-![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/tech_stack.svg)
+| Component             | Description                                                                                                                                                      |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Hardware              | ESP32 devkit                                                                                                                                                     |
+| Server                | Python websocket server(based on asyncio library)                                                                                                                |
+| Resources             | Yoga mat, FSR, GSR, Pulse Oximeter(MAX301002), Multiplexers, Connecting wires, Resistors                                                                         |
+| Libraries             | ArduinoJSON for sending sensor data in JSON format, Arduino Websocket Client, WiFi.h for connecting to WiFi, Websockets and websocket-client libraries in Python |
+| IDE                   | Arduino IDE, VS code                                                                                                                                             |
+| Programming languages | Embedded C++, Python3                                 
 ## Setup
 1. Run the python server in the servers folder after installing "websockets" and "websocket-client" libraries.
 2. After ensuring that the server is switched, go to Sensor_clients folder and burn the code for the desired sensor on connecting the sensor to ESP32 and using Arduino IDE.
