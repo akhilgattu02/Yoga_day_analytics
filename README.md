@@ -18,6 +18,7 @@ In today's times, there is growing consciousness with respect to monitoring heal
 ![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/architecture.png)
 
 ## Technology stack
+![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/tech_stack.svg)
 ## Setup
 1. Run the python server in the servers folder after installing "websockets" and "websocket-client" libraries.
 2. After ensuring that the server is switched, go to Sensor_clients folder and burn the code for the desired sensor on connecting the sensor to ESP32 and using Arduino IDE.
