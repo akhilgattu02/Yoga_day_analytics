@@ -1,16 +1,22 @@
 
 # Table of contents
-1. [About the project](#websocket-server-for-transmitting-data-from-multiple-sensors)
-2. [Overall Architechture](#architecture)
-3. [Technology stack](#technology-stack)
-4. [Setup](#setup)
-5. [Results](#results)
+1. [About the project](#about-the-project)
+2. [Schematic](#schematic)
+3. [Overall Architechture](#architecture)
+4. [Technology stack](#technology-stack)
+5. [Setup](#setup)
+6. [Results](#results)
 
 
-## Websocket server for transmitting data from multiple sensors
+## About the project
 In today's times, there is growing consciousness with respect to monitoring healthcare data. Hence, we(BME department at IIT-Hyderabad) have collaborated to initiate this introductory project to demonstrate that yoga can be used as a tool to generate healthcare data, and its countless benefits can be analysed from the above generated data.
 
+## Schematic
+![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/schematic.png)
+
 ## Architecture
+![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/schematics/architecture.png)
+
 ## Technology stack
 ## Setup
 1. Run the python server in the servers folder after installing "websockets" and "websocket-client" libraries.
