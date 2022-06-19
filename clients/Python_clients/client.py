@@ -14,7 +14,7 @@ def on_message(wsapp, message):
             json.dumps(data,f)
     data.append(message)
 
-wsapp = websocket.WebSocketApp("ws://192.168.0.92:7892/", on_message=on_message)
+wsapp = websocket.WebSocketApp("ws://192.168.0.116:7892/", on_message=on_message)
 wsapp.run_forever()
 
 if count == 5:
