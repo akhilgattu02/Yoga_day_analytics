@@ -2,7 +2,7 @@ import asyncio
 import websockets
 import json
 import time
-HOST = "192.168.0.237"  # Empty denotes a localhost.
+HOST = "192.168.43.14"  # Empty denotes a localhost.
 PORT = 7891 
 CONNECTIONS = set()
 
