@@ -52,6 +52,9 @@ In today's times, there is growing consciousness with respect to monitoring heal
 #### Plots
 1. The X-axis represents time for all the subplots and the Y-axis represents the output voltages for all 16 channels.
 ![alt_text](https://github.com/akhilgattu02/Yoga_day_analytics/blob/main/pictures/emg.png)
+## Contributors
+1. [Dhanush Pittala](https://github.com/dhanushpittala11)
+2. [Akhil Gattu](https://github.com/akhilgattu02)
 ## Issues to fix:
 1. Database integration
 2. Faster data transmission of multiple sensors(using threading or queues)
