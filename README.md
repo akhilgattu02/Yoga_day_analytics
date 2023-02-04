@@ -55,6 +55,7 @@ In today's times, there is growing consciousness with respect to monitoring heal
 ## Contributors
 1. [Dhanush Pittala](https://github.com/dhanushpittala11)
 2. [Akhil Gattu](https://github.com/akhilgattu02)
+3. [Ramanathan Annamalai](https://github.com/Ramanathan-Annamalai)
 ## Issues to fix:
 1. Database integration
 2. Faster data transmission of multiple sensors(using threading or queues)
